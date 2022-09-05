@@ -1,0 +1,67 @@
+Table ShowType {
+  ID int [pk, increment]
+  ShowTypeIdentifier nvarchar(20) [not null]
+}
+
+Table AgeCertification {
+  ID int [pk, increment]
+  CertificationIdentifier nvarchar(20) [not null]
+}
+
+Table Genre {
+  ID int [pk, increment]
+  GenreString nvarchar(32) [not null]
+}
+
+Table ProductionCountry {
+  ID int [pk, increment]
+  CountryIdentifier nvarchar(64) [not null]
+}
+
+Table Role {
+  ID int [pk, increment]
+  RoleName nvarchar(32) [not null]
+}
+
+Table Person {
+  ID int [pk, increment]
+  JustWatchPersonID int [not null]
+  FullName nvarchar(50) [not null]
+}
+
+Table Show {
+  ID int [pk, increment]
+  JustWatchShowID nvarchar(12) [not null]
+  Title nvarchar(128) [not null]
+  Description nvarchar(2048)
+  ShowTypeID int [not null,ref: > ShowType.ID]
+  ReleaseYear int [not null]
+  AgeCertificationID int [ref: > AgeCertification.ID]
+  Runtime int [not null]
+  Seasons int
+  ImdbID nvarchar(12)
+  ImdbScore float
+  ImdbVotes float
+  TmdbPopularity float
+  TmdbScore float
+}
+
+Table GenreAssignment {
+  ID int [pk, increment]
+  ShowID int [not null, ref: > Show.ID]
+  GenreID int [not null, ref: > Genre.ID]
+}
+
+Table ProductionCountryAssignments {
+  ID int [pk, increment]
+  ShowID int [not null, ref: > Show.ID]
+  ProductionCountryID int [not null, ref: > ProductionCountry.ID]
+}
+
+Table Credit {
+  ID int [pk, increment]
+  ShowID int [not null, ref: > Show.ID]
+  PersonID int [not null, ref: > Person.ID]
+  RoleID int [not null, ref: > Role.ID]
+  CharacterName nvarchar(128)
+}
