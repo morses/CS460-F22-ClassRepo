@@ -15,11 +15,11 @@ INSERT INTO [Seller](FirstName,LastName,Email,Phone)
 	('Lyle','Banks','lyle@hotmail.com','622-494-4782'),
 	('Pearl','Greene','pearl@gmail.com','755-823-7245');
 
-INSERT INTO [Item](Name,Description,SellerID)
+INSERT INTO [Item](Name,Description,Condition,SellerID)
 	VALUES
-	('Abraham Lincoln Hammer','A bench mallet fashioned from a broken rail-splitting maul in 1829 and owned by Abraham Lincoln',3),
-	('Albert Einsteins Telescope','A brass telescope owned by Albert Einstein in Germany, circa 1927',1),
-	('Bob Dylan Love Poems','Five versions of an original unpublished, handwritten, love poem by Bob Dylan',2);
+	('Abraham Lincoln Hammer','A bench mallet fashioned from a broken rail-splitting maul in 1829 and owned by Abraham Lincoln','Lightly used',3),
+	('Albert Einsteins Telescope','A brass telescope owned by Albert Einstein in Germany, circa 1927','Mint in box',1),
+	('Bob Dylan Love Poems','Five versions of an original unpublished, handwritten, love poem by Bob Dylan','Over used',2);
 
 INSERT INTO [Bid](ItemID,BuyerID,Price,TimeSubmitted)
 	VALUES

@@ -27,6 +27,7 @@ CREATE TABLE [Item]
   [ID]          INT           NOT NULL IDENTITY(1, 1) PRIMARY KEY,
   [Name]        NVARCHAR(50)  NOT NULL,
   [Description] NVARCHAR(256) NOT NULL,
+  [Condition]   NVARCHAR(512) NOT NULL,
   [SellerID]    INT           -- In this model an Item doesn't have to have a seller
 );
 
