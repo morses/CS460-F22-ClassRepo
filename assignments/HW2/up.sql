@@ -40,7 +40,7 @@ CREATE TABLE [Show]
   [ID]                  int           NOT NULL IDENTITY(1, 1) PRIMARY KEY,
   [JustWatchShowID]     nvarchar(12)  NOT NULL,
   [Title]               nvarchar(128) NOT NULL,
-  [Description]         nvarchar(2048),
+  [Description]         nvarchar(MAX),
   [ShowTypeID]          int NOT NULL,
   [ReleaseYear]         int NOT NULL,
   [AgeCertificationID]  int,
