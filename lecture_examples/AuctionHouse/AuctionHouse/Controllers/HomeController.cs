@@ -7,15 +7,23 @@ namespace AuctionHouse.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly AuctionHouseDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, AuctionHouseDbContext ctx)
     {
         _logger = logger;
+        _context = ctx;
     }
 
     public IActionResult Index()
     {
         return View();
+    }
+
+    public IActionResult Buyers()
+    {
+        IEnumerable<Buyer> buyers = _context.Buyers.ToList();
+        return View(buyers);
     }
 
     public IActionResult Privacy()
