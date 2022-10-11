@@ -27,6 +27,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 dotnet add package Microsoft.EntityFrameworkCore.Proxies
+dotnet add package Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore
 ```
 
 ## Run and open
@@ -58,6 +59,8 @@ Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AuctionHouse;Integrated Secu
 
 ### Create Model classes and the DBContext subclass
 Reverse engineer C# model files from the DB schema found through the SampleConnection, placing them in the Models folder, and also create a DBContext subclass called SampleDbContext in the Models folder.  If older models exist already, the --force will overwrite them.
+
+Please use the version with data annotations for this term.
 ```
 dotnet ef dbcontext scaffold Name=SampleConnection Microsoft.EntityFrameworkCore.SqlServer --context SampleDbContext --context-dir Models --output-dir Models --verbose --force
 # or if you want to use data annotations in your model classes rather than defining things in the context class
@@ -78,6 +81,21 @@ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     }
 }
 ```
+This version of modifying the DbContext subclass is problematic because the next time you regenerate your model classes it will be overwritten.  So it is better to make this change in `Program.cs` when your application is being initialized.  Here's where you can do that:
+```
+public static void Main(string[] args)
+{
+    // adds the following logging providers: Console, Debug, EventSource, EventLog (https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0)
+    var builder = WebApplication.CreateBuilder(args);
+
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
+    var connectionString = builder.Configuration.GetConnectionString("StreamingConnection");
+    builder.Services.AddDbContext<StreamingDbContext>(options => options
+                                .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
+                                .UseSqlServer(connectionString));
+```
+
 
 ### Use LINQPad 7 to explore your data and build Linq queries
 Download and install [LINQPad 7](https://www.linqpad.net/) (sorry, Windows only).
