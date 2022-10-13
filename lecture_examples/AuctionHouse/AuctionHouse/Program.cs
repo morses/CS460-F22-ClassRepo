@@ -2,6 +2,8 @@ namespace AuctionHouse;
 using AuctionHouse.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using AuctionHouse.DAL.Abstract;
+using AuctionHouse.DAL.Concrete;
 
 public class Program
 {
@@ -12,9 +14,13 @@ public class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.AddDbContext<AuctionHouseDbContext>(
-            options => options.UseSqlServer(builder.Configuration.GetConnectionString("AuctionHouseConnection"))
+            options => options
+                        .UseLazyLoadingProxies()    // Will use lazy loading, but not in LINQPad as it doesn't run Program.cs
+                        .UseSqlServer(builder.Configuration.GetConnectionString("AuctionHouseConnection"))
+                        
         );
-
+        builder.Services.AddScoped<IBuyerRepository, BuyerRepository>();  // Register our types with the dependency injection container
+        //builder.Services.AddScoped<IBidRepository, BidRepository>();  // Register our types with the dependency injection container
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.

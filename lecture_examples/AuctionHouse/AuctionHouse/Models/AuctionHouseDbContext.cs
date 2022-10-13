@@ -27,6 +27,8 @@ namespace AuctionHouse.Models
             {
                 optionsBuilder.UseSqlServer("Name=AuctionHouseConnection");
             }
+            optionsBuilder.UseLazyLoadingProxies();
+            // now works for LINQPad
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
