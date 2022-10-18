@@ -103,3 +103,29 @@ Download and install [LINQPad 7](https://www.linqpad.net/) (sorry, Windows only)
 Make sure your project has built, then open LINQPad and click `Add connection`.  Select the radio button for "Use a typed data context from your own assembly" and choose "EntityFramework Core (3.x -> 7.x)".  Click Next.  Click Browse for the "Path to Custom Assembly" and go find your applications `.dll`  For this example it is in the bin folder of your applications source at `bin\Debug\net6.0\Sample.dll`.  After the dialog finds your DbContext class and populates the second text field, choose "Via a constructor that accepts a DbContextOptions<>" from the "How should LINQPad instantiate your DbContext?".  Click Test and hopefully it shows you that it can connect to the database through your applications code.
 
 This process will be demonstrated in class.
+
+### Scaffold CRUD operations in a controller with views
+To see an example of CRUD operations for an entity we can scaffold a sample controller with associated views that perform each of the CRUD operations.  This first example does so in a traditional page load model with a normal MVC controller.
+
+First install (or update) the code generator tool:
+```
+dotnet tool install -g dotnet-aspnet-codegenerator
+dotnet tool update -g dotnet-aspnet-codegenerator
+```
+
+Then scaffold a controller with views for a particular model
+```
+dotnet-aspnet-codegenerator controller -name ItemController -m Show -dc AuctionHouseDbContext --relativeFolderPath Controllers --useDefaultLayout --referenceScriptLibraries
+```
+
+Here is the documentation for this tool: [dotnet-aspnet-codegenerator](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/tools/dotnet-aspnet-codegenerator?view=aspnetcore-6.0)
+
+Note, this uses the DbContext directly and so is only a guide or starting point for us since we are using Repositories.
+
+For a WebAPI REST interface for CRUD operations we can change this slighly to generate a WebAPI controller with NO views:
+```
+dotnet-aspnet-codegenerator controller -name BuyerController -async -api -m Buyer -dc AuctionHouseDbContext -outDir Controllers
+```
+See [Tutorial: Create a web API with controllers](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio-code) for more.
+
+Watch out for cycles though if you try to do this directly with your database models.  
