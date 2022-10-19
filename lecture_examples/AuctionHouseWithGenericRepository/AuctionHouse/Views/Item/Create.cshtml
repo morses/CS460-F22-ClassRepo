@@ -1,0 +1,77 @@
+@model AuctionHouse.Models.Item
+
+@{
+    ViewData["Title"] = "Add a new Item";
+}
+
+<h1 class="text-center mb-5">Add a new Item for sale</h1>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        @*This form will go to /Items/Create*@
+        <form asp-action="Create" method="post">
+            <div class="row">
+                <div class="col">
+                    <label asp-for="Name" class="control-label">Item Name</label>
+                    <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="SellerId" class="control-label">Seller</label>
+                        <select asp-for="SellerId" class="form-control" asp-items="ViewBag.SellerId"></select>
+                        <span asp-validation-for="SellerId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label asp-for="Condition" class="control-label">Condition</label>
+                    <input asp-for="Condition" class="form-control">
+                    <span asp-validation-for="Condition" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group mt-3 text-center">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*An example of showing an error message when something goes wrong.  This is a Bootstrap modal*@
+@if (ViewBag.Message != null)
+{
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger">@ViewBag.Message</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+    @* Trigger the modal, since it's hidden by default *@
+    <script type="text/javascript">
+        $(document).ready( () => $('#errorModal').modal('toggle') );
+    </script>
+    }
+}
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
