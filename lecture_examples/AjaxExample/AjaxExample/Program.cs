@@ -1,3 +1,5 @@
+using AjaxExample.Services;
+
 namespace AjaxExample;
 
 public class Program
@@ -8,6 +10,11 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddScoped<INumbersService, NumbersService>();
+        builder.Services.AddScoped<IEarthquakeService, USGSEarthquakeService>();
+
+        // enable Swagger features (needs package Swashbuckle.AspNetCore)
+        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 
@@ -17,6 +24,12 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
+        }
+        else
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

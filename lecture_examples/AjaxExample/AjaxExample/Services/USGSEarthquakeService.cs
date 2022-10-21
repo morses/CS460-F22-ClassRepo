@@ -39,7 +39,7 @@ namespace AjaxExample.Services
             
             if(geoJsonDTO != null)
             {
-                return geoJsonDTO.Features.Select(f => new Earthquake(f.Properties.Mag, f.Properties.Place));
+                return geoJsonDTO.features.Select(f => new Earthquake(f.properties.mag, f.properties.place));
             }
 
             return Enumerable.Empty<Earthquake>();

@@ -5,28 +5,28 @@ namespace AjaxExample.Models.DTO
 #nullable disable
     public class GeoJsonDTO
     {
-        public string Type { get; set; }
-        public MetaData Metadata { get; set; }
-        public List<Features> Features { get; set; }
+        public string type { get; set; }
+        public MetaData metadata { get; set; }
+        public List<Features> features { get; set; }
     }
 
     public class MetaData
     {
-        public string Url { get; set; }
-        public string Title { get; set; }
-        public int Status { get; set; }
-        public int Count { get; set; }
+        public string url { get; set; }
+        public string title { get; set; }
+        public int status { get; set; }
+        public int count { get; set; }
     }
 
     public class Features
     {
-        public Properties Properties { get; set; }
-        // public Geometry Geometry {get; set;}     // not pulling this one out at the moment
+        public Properties properties { get; set; }
+        // public Geometry geometry {get; set;}     // not pulling this one out at the moment
     }
 
     public class Properties
     {
-        public int Mag { get; set; }
-        public string Place { get; set; }
+        public double mag { get; set; }
+        public string place { get; set; }
     }
 }
