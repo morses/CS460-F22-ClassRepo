@@ -1,8 +1,66 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "AJAX Demonstrations";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-4">
+        <div class="mb-3">
+            <form id="numberForm">
+                @*Submit action for this form will be disabled in JS since we don't want to actually submit this form*@
+                <div class="form-group">
+                    <input id="numberCountInput" name="numberCount" type="number" value="10" min="1" max="1000" class="form-control" />
+                </div>
+                <button id="numberButton" name="numberButton" class="btn btn-outline-primary" type="submit">Request Random Numbers</button>
+            </form>
+            <div>
+                <div id="numberMessage">@*Will be filled in by JS*@</div>
+                <div id="numberCount">@*Will be filled in by JS*@</div>
+                <div id="numbers" class="text-wrap text-success">@*Will be filled in by JS*@</div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col-md-8">
+        <div id="theplot">@*Will be filled in by JS*@</div>
+    </div>
 </div>
+
+<div class="row mt-3">
+    <div class="col-md-6">
+        <form id="earthquakeForm" class="form-inline">
+            <div class="form-group mb-2">
+                <input type="text" readonly class="form-control-plaintext" for="timeRange" value="Select a time range">
+            </div>
+            <div class="form-group mb-2">
+                <select name="timeRange" id="timeRange" class="form-control mx-sm-3">
+                    @*Will be filled in by JS*@
+                </select>
+            </div>
+            <button id="earthquakeButton" name="earthquake" type="button" class="btn btn-outline-primary">See Recent Earthquakes</button>
+        </form>
+            
+            <div>
+                <table id="earthquakeTable" class="table table-sm table-bordered mt-3" style="display: none">
+                    <thead>
+                        <tr>
+                            <th scope="col">Magnitude</th>
+                            <th scope="col">Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*Will be filled in by JS*@
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+
+@section Scripts 
+{
+    <script>
+        console.log("hello world");
+    </script>
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript" src="~/js/main.js"></script>
+}

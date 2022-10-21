@@ -16,7 +16,7 @@ namespace AjaxExample.Controllers
             _earthquakeService = earthquakeService;
         }
 
-        [HttpGet]
+        [HttpGet("{timeRange}")]
         public ActionResult<IEnumerable<Earthquake>> Earthquakes(EarthquakeTimeRange timeRange = EarthquakeTimeRange.PastHour)
         {
             if (!(timeRange >= EarthquakeTimeRange.PastHour && timeRange <= EarthquakeTimeRange.PastMonth))
@@ -25,6 +25,20 @@ namespace AjaxExample.Controllers
             }
 
             return Ok(_earthquakeService.GetRecentEarthquakes(timeRange));
+        }
+
+        [HttpGet("timeranges")]
+        // Don't have a type for this one since we use an anonymous type.  See how there is less documentation in Swagger as a result
+        public ActionResult AvailableTimeRanges()
+        {
+            // Build items for select list
+            var selItems = Enum.GetValues<EarthquakeTimeRange>()
+                               .Select(tr => new {
+                                   Value = ((int)tr).ToString(),
+                                   Text = Earthquake.TimeRanges[tr]
+                               })
+                               .ToList();
+            return Ok(selItems);
         }
     }
 }
