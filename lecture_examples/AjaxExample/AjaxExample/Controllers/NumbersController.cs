@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using AjaxExample.Services;
 using AjaxExample.Models;
+using System.Net;
 
 namespace AjaxExample.Controllers
 {
@@ -16,10 +17,20 @@ namespace AjaxExample.Controllers
             _numbersService = numbersService;
         }
 
-        [HttpGet]
-        public RandomNumbers RandomNumbers(int count = 100)
+        [HttpGet("list")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<RandomNumbers> RandomNumbers(int count = 100)
         {
-            RandomNumbers nums = _numbersService.GetRandomNumbers("Random Numbers API", count, 1000);
+            RandomNumbers nums;
+            try
+            {
+                nums = _numbersService.GetRandomNumbers("Random Numbers API", count, 1000);
+            }
+            catch(ArgumentOutOfRangeException e)
+            {
+                return BadRequest(new {message = e.Message});
+            }
             return nums;
         }
     }
