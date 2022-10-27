@@ -8,8 +8,11 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        //string token = builder.Configuration["GitHubToken"];
+        //string username = "morses";
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        //builder.Services.AddScoped<IGitHubService,GitHubService>(s => new GitHubService(token,username));
         builder.Services.AddScoped<INumbersService, NumbersService>();
         builder.Services.AddScoped<IEarthquakeService, USGSEarthquakeService>();
 
