@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionHouse", "AuctionHouse\AuctionHouse.csproj", "{9F04B13D-F386-4EC8-BE5E-BC92007F5038}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuctionHouse_Tests", "AuctionHouse_Tests\AuctionHouse_Tests.csproj", "{648A7066-FDBA-45FF-BCA5-F227E058E092}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F04B13D-F386-4EC8-BE5E-BC92007F5038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F04B13D-F386-4EC8-BE5E-BC92007F5038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F04B13D-F386-4EC8-BE5E-BC92007F5038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F04B13D-F386-4EC8-BE5E-BC92007F5038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648A7066-FDBA-45FF-BCA5-F227E058E092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648A7066-FDBA-45FF-BCA5-F227E058E092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648A7066-FDBA-45FF-BCA5-F227E058E092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648A7066-FDBA-45FF-BCA5-F227E058E092}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
