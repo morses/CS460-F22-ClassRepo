@@ -4,7 +4,7 @@
     {
         public static string ExtractFirstName(string fullname)
         {
-            return fullname.Split(' ').First();
+            return fullname.Trim().Split(' ').First();
         }
 
     }

@@ -29,8 +29,9 @@ namespace AuctionHouse.Controllers
         }
 
         // GET: Item/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? ids)
         {
+            int? id = ids;
             if (id == null)
             {
                 return NotFound();
@@ -61,6 +62,9 @@ namespace AuctionHouse.Controllers
         [ValidateAntiForgeryToken]          // We do NOT want to bind an ID coming from the user when doing a Create
         public async Task<IActionResult> Create([Bind("Name,Description,Condition,SellerId")] Item item)
         {
+            ModelState.ClearValidationState("Description");
+            // fix the reason why it was null
+            TryValidateModel(item);
             if (ModelState.IsValid)
             {
                 // We have a model that passes any validation we've specified
