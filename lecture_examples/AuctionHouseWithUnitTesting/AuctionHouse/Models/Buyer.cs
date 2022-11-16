@@ -17,11 +17,11 @@ namespace AuctionHouse.Models
         [Key]
         [Column("ID")]
         public int Id { get; set; }
-        [StringLength(50)]
+        [StringLength(50),Required(AllowEmptyStrings = false)]
         public string FirstName { get; set; } = null!;
-        [StringLength(50)]
+        [StringLength(50), Required(AllowEmptyStrings = false)]
         public string LastName { get; set; } = null!;
-        [StringLength(50)]
+        [StringLength(50), Required(AllowEmptyStrings = false)]
         public string Email { get; set; } = null!;
 
         [InverseProperty("Buyer")]
