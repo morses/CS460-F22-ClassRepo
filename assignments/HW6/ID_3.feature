@@ -52,6 +52,7 @@ Scenario Outline: Add task for item and it shows up in task list
     And I am on their "user" page
   When I click on add task for "Car"
     And I enter <Description> and <StartingDate> and <Interval>
+    And I submit the add task form
   Then I should see <Description> in the list of tasks if <StartingDate> is within TODAY + 7 days
   Examples:
     | Description    | StartingDate | Interval |
@@ -64,6 +65,7 @@ Scenario Outline: Add task for item with short interval shows up multiple times
     And I am on their "user" page
   When I click on add task for "Car"
     And I enter <Description> and <StartingDate> and <Interval>
+    And I submit the add task form
   Then I should see <Description> in the list of tasks multiple times if <StartingDate> is within TODAY + 7 days
   Examples:
     | Description    | StartingDate | Interval |
@@ -76,6 +78,7 @@ Scenario: Add new task form has validation
     And I am on their "user" page
   When I click on add task for "Car"
     And I enter invalid information
+    And I submit the add task form
   Then I will see an validation error message
 
 Scenario: Add new task uses AJAX
@@ -83,4 +86,5 @@ Scenario: Add new task uses AJAX
     And I am on their "user" page
   When I click on add task for "Car"
     And I enter "Clean cameras" and "TODAY" and "5"
+    And I submit the add task form
   Then I should see the task list modified without a page reload
