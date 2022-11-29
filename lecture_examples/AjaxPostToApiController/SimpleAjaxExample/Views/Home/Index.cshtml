@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "AJAX POST";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Example of AJAX POSTing to an ApiController</h1>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4 offset-md-3">
+        <form id="create-person-form">      @* Not a POST, as we're never submitting the form.  Just using a form for the styling.*@
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="Age" class="control-label">Age</label>
+                    <input id="age-input" name="Age" class="form-control" type="number"  min="0" max="120" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="Name" class="control-label">Name</label>
+                    <input id="name-input" name="Name" class="form-control" type="text" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="Anniversary" class="control-label">Anniversary</label>
+                    <input id="anniversary-input" name="Anniversary" class="form-control" type="date" required />
+                </div>
+            </div>
+            <div class="form-group mt-3 text-center">
+                @* Make sure this isn't a submit button or else when clicked the browser will submit the form.  Either
+                   this or use preventDefault() on the form from JS (better to do both)
+                *@
+                <input id="add-person-button" type="button" value="Add new Person" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" src="~/js/createPerson.js"></script>
+}
