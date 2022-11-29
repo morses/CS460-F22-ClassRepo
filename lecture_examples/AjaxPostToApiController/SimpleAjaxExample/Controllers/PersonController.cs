@@ -40,18 +40,19 @@ namespace SimpleAjaxExample.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public ActionResult<Person> PostPerson([Bind("Age,Name,Anniversary")] PersonDTO person)
         public ActionResult<Person> PostPerson([Bind("Age,Name,Anniversary")] Person person)
         {
-            if (ModelState.IsValid)
-            {
-                // prevent overposting of the Id
+            // prevent overposting of the Id
+            //Person pers = new Person();
+            //pers.Age = person.Age;
+            //pers.Name = person.Name;
+            //pers.Anniversary = person.Anniversary;
                 person.Id = 0;
                 // If using a DTO can proceed.  If using an Entity Framework model, set all nav properties to null
-                Person p = _personRepository.AddOrUpdate(person);
-                return CreatedAtAction("GetPerson", "Person", p);
-            }
-
-            return BadRequest(ModelState);
+            //Person p = _personRepository.AddOrUpdate(pers);
+            Person p = _personRepository.AddOrUpdate(person);
+            return CreatedAtAction("GetPerson", "Person", p);
         }
     }
 }
