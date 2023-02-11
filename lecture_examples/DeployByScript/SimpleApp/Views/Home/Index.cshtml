@@ -1,0 +1,30 @@
+﻿@model SimpleApp.Models.MainPageVM;
+
+@using SimpleApp.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<SimpleUser> SignInManager
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if(SignInManager.IsSignedIn(User) && Model.HasUser)
+{
+    <div class="text-center">
+        <h1 class="display-3"><span class="fst-italic">@Model.FirstName @Model.LastName</span></h1>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome, please create an account</h1>
+    </div>
+}
+
+@section Footer 
+{
+    @if (Model != null && Model.GetLastVisitHumanized() != "")
+    {
+        <p class="text-muted">Last visited @Model.GetLastVisitHumanized() ago</p>
+    } 
+}
