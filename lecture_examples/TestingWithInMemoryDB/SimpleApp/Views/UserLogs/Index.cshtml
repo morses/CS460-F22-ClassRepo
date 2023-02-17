@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SimpleApp.Models.UserLog>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Current UTC time: @DateTime.UtcNow.ToString()</h1>
+
+<table class="table" id="logTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ipaddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AspnetIdentityId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserAgent)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ipaddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspnetIdentityId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserAgent)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section Scripts 
+{
+    <script src="~/js/fancyTable.min.js" ></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#logTable").fancyTable({
+                sortColumn: 0,
+                sortOrder: 'descending',
+                pagination: true,
+                perPage: 10,
+                globalSearch: true
+            });
+        });
+    </script>
+}

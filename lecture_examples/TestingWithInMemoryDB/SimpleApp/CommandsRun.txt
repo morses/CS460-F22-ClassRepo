@@ -1,0 +1,6 @@
+﻿
+dotnet ef migrations script --output Data/IdentityUp.sql
+
+dotnet aspnet-codegenerator identity -dc SimpleApp.Data.ApplicationDbContext --files "Account.Register;Account.Login;Account.Manage.Index" --force
+
+dotnet ef migrations add CustomUserData --output-dir Data/Migrations --context ApplicationDbContext
