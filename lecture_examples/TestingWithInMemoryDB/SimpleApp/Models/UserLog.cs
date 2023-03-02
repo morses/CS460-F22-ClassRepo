@@ -28,4 +28,11 @@ public partial class UserLog
     [Column("ASPNetIdentityId")]
     [StringLength(450)]
     public string AspnetIdentityId { get; set; }
+
+    [Column("ColorID")]
+    public int ColorId { get; set; }
+
+    [ForeignKey("ColorId")]
+    [InverseProperty("UserLogs")]
+    public virtual Color Color { get; set; }
 }
