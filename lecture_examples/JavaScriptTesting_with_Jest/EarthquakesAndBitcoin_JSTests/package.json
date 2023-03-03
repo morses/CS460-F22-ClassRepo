@@ -1,0 +1,19 @@
+{
+  "name": "earthquakesandbitcoin_jstests",
+  "version": "1.0.0",
+  "description": "Javascript unit testing project to test the JS in our main project",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.4.3",
+    "eslint": "^8.35.0",
+    "jest": "^29.4.3",
+    "jest-editor-support": "^31.0.1"
+  }
+}
