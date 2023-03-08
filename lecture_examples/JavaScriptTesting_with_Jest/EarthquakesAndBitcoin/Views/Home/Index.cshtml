@@ -32,6 +32,7 @@
         <div id="loadingAnimation">
             <img src="@Url.Content("~/images/Eclipse-1s-200px.gif")" alt="Processing your request, please wait" />
         </div>
+        <div id="error-alert"></div>
     </div>
 </div>
 <div class="row results" hidden>
@@ -69,5 +70,5 @@
 
 @section Scripts {
     <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script type="text/javascript" src="~/js/main.js"></script>
+    <script type="module" src="~/js/main.js"></script>
 }
