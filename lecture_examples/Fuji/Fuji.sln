@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fuji", "Fuji.csproj", "{F78B3C37-47A2-42E8-80DD-AC8D0FAFC927}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F78B3C37-47A2-42E8-80DD-AC8D0FAFC927}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78B3C37-47A2-42E8-80DD-AC8D0FAFC927}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78B3C37-47A2-42E8-80DD-AC8D0FAFC927}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78B3C37-47A2-42E8-80DD-AC8D0FAFC927}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FEC39B79-00BE-44E0-A568-941F07259FD3}
+	EndGlobalSection
+EndGlobal
