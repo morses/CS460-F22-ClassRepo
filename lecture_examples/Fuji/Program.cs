@@ -44,6 +44,10 @@ namespace Fuji
             //     "allow unless explicitly authorized" (the default)
             // to
             //     "require authorization unless explicitly allowed for anyone"
+            // BEWARE!! This will apply to ALL pages, including your Login and Register pages.
+            // If you scaffold the Identity pages, remember to put [AllowAnonymous] in front of the code-behind class
+            // otherwise you'll get an endless string of redirects: When you go to login with authorize on, it redirects 
+            // to the login page, which then redirects to login, etc. until it reaches a limit that the browser presumably sets.
             builder.Services.AddAuthorization(opts => {
                 opts.FallbackPolicy = new AuthorizationPolicyBuilder()
                             .RequireAuthenticatedUser()
