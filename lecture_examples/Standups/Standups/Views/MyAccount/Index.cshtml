@@ -1,0 +1,36 @@
+﻿@model Standups.Models.Supuser
+
+@{
+    ViewBag.Title = "Your Account";
+}
+
+<h2>Your Account</h2>
+
+<div>
+    <hr />
+    @if (User.IsInRole("Admin"))
+    {
+        <p>You are the administrator of this site.</p>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col">
+                <h2>@Model.FirstName @Model.LastName</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                @if(Model.HasGroup())
+                {
+                    <p>Your Team: @Model.Supgroup.Name</p>
+                }
+                else
+                {
+                    <p>You have not yet selected your team.  You can do that <a asp-action="SelectGroup">here</a>.</p>
+                }
+            </div>
+        </div>
+    }
+
+</div>

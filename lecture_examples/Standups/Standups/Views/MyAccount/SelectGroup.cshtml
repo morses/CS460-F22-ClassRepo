@@ -1,0 +1,23 @@
+﻿@model Standups.ViewModels.SelectGroupVM
+@{
+    ViewBag.Title = "Select Your Team";
+}
+
+<div class="row justify-content-center">
+    <div class="col text-center">
+        <h2>Select your team</h2>
+        <hr />
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-4 mt-5">
+        <form asp-action="SelectGroup" method="post">
+            <div class="mb-3">
+                <select asp-for="GroupId" asp-items="Model.Groups" class="form-select" name="id"></select>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+

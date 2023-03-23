@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Standups.DAL.Abstract;
 using Standups.DAL.Concrete;
 using Standups.Data;
+using Standups.Services;
 using Standups.Utilities;
 
 namespace Standups
@@ -61,6 +62,12 @@ namespace Standups
 
             builder.Services.AddScoped<DbContext, StandupsDbContext>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
+
+            // enable Swagger features (needs package Swashbuckle.AspNetCore)
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
@@ -93,7 +100,10 @@ namespace Standups
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseMigrationsEndPoint();
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
+                //app.UseMigrationsEndPoint();      // we don't want to trigger migrations to our DB from the running UI!
             }
             else
             {
@@ -110,6 +120,9 @@ namespace Standups
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.MapControllerRoute(
+                name: "Admin",
+                pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

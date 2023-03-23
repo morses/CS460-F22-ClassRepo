@@ -1,0 +1,87 @@
+﻿@model Standups.ViewModels.MeetingsVM
+
+@{
+    ViewBag.Title = "Past Standup Meeting Reports";
+}
+
+@section HeadContent
+    {
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+}
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            //console.log("running datatables...");
+            $('#reports_table').DataTable();
+        });
+    </script>
+}
+
+<div >
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <h1>Stand-Up Meeting <span class="fs-4">Reports</span></h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <h2 class="">@Model.CurrentUser.FullName</h2>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            @if (Model.NumberOfReports == 0)
+            {
+                <p>You don't have any standup meeting reports yet.</p>
+            }
+            else
+            {
+                <table class="table table-striped" id="reports_table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Meetings.FirstOrDefault().SubmissionDate)
+                            </th>
+                            <th>Day</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Meetings.FirstOrDefault().Completed)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Meetings)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id })
+                                </td>
+                                <td>
+                                    @item.TimeStampInPacificTimeZone.ToString("MM/dd/yyyy @ H:mm") @item.PSTorPDT
+                                </td>
+                                @if (item.TimeStampMeetsCriteria(Model.classtime, Model.classdays))
+                                {
+                                    <td class="success">@item.DayOfWeekString</td>
+                                }
+                                else
+                                {
+                                    <td class="info">@item.DayOfWeekString</td>
+                                }
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Completed)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            <p>
+                @Html.ActionLink("Create New Report", "Create")
+            </p>
+        </div>
+    </div>
+</div>

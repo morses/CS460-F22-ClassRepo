@@ -1,0 +1,76 @@
+﻿@model Standups.Models.Supmeeting
+
+@{
+    ViewBag.Title = "SUPForm";
+    string completedLabel = "What have you completed since the last meeting?";
+    string planningLabel = "What are you planning to do now?";
+    string obstaclesLabel = "What obstacles are preventing you from completing tasks?";
+}
+
+@*When the model has the ReadOnly flag set, we just display the contents in read-only text areas.  When false
+  it's assumed we're in the create form and so also add the validation message.  Also, we don't need to display the
+  timestamp since it's auto generated.*@
+<div class="row">
+    <div class="col-xs-12 col-md-4">
+        <h2 class="">@Model.Supuser.FullName</h2>
+        @if (Model.ReadOnly)
+        {
+            <p class="text-muted">Posted: @Model.TimeStampInPacificTimeZone.ToString("MM/dd/yyyy @ H:mm")</p>
+        }
+    </div>
+    <div class="col-xs-12 col-md-4 col-md-offset-2">
+        <h3>@Model.Supuser.Supgroup.Name</h3>
+        <p class="text-primary">"<em>@Model.Supuser.Supgroup.Motto</em>"</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Completed, completedLabel, htmlAttributes: new { @class = "control-label" })
+            @if (Model.ReadOnly)
+            {
+                @Html.TextAreaFor(m => m.Completed, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%", @readonly = "readonly" })
+                ;
+            }
+            else
+            {
+                @Html.TextAreaFor(m => m.Completed, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%" })
+                ;
+                @Html.ValidationMessageFor(m => m.Completed, null, new { @class = "text-danger field-validation" })
+            }
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Planning, planningLabel, htmlAttributes: new { @class = "control-label" })
+            @if (Model.ReadOnly)
+            {
+                @Html.TextAreaFor(m => m.Planning, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%", @readonly = "readonly" })
+                ;
+            }
+            else
+            {
+                @Html.TextAreaFor(m => m.Planning, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%" })
+                ;
+                @Html.ValidationMessageFor(m => m.Planning, null, new { @class = "text-danger" })
+            }
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Obstacles, obstaclesLabel, htmlAttributes: new { @class = "control-label" })
+            @if (Model.ReadOnly)
+            {
+                @Html.TextAreaFor(m => m.Obstacles, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%", @readonly = "readonly" })
+                ;
+            }
+            else
+            {
+                @Html.TextAreaFor(m => m.Obstacles, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%" })
+                ;
+                @Html.ValidationMessageFor(m => m.Obstacles, null, new { @class = "text-danger" })
+            }
+
+        </div>
+    </div>
+</div>
+
+

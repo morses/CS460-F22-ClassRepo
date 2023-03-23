@@ -1,0 +1,20 @@
+﻿@model Standups.Models.Supmeeting
+
+@{
+    ViewBag.Title = "SUP Meeting Form";
+    Model.ReadOnly = true;
+}
+
+<div class="row justify-content-center">
+    <div class="col text-center">
+        <h1>Stand-Up Meeting <span class="fs-4">Report</span></h1>
+        <hr />
+    </div>
+</div>
+
+<div class="container-fluid">
+    @Html.Partial("_ReportDetailsPartial", Model)
+    <div>
+        @Html.ActionLink("Back to All Reports", "Index")
+    </div>
+</div>

@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Standups.Models.Supquestion>
+
+@{
+    ViewBag.Title = "Review/Rate Comments";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Questions</h3>
+            <p>Click on a question to view comments:</p>
+            <div class="list-group" id="questions">
+                @if (Model.Count() == 0)
+                {
+                    <p class="list-group-item disabled">There are no questions at the moment.</p>
+                }
+                @foreach (var question in Model)
+                {
+                    var id = $"{question.Id}";
+                    <button type="button" class="list-group-item" id="@id">
+                        @question.Question &nbsp; &nbsp;<span class="badge">@question.CountOfCommentsWithAdvisorApproval()</span>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Comments</h3>
+            <p>
+                These are all the comments that students have submitted and a moderator has ok'd to post for the question you selected.  If you agree with the comment as
+                it addresses the question, please click the thumbs up.  If you disagree, click thumbs down.  If you don't care, don't click either.  Once you
+                rate a comment you can't unrate it, but you can change your rating.  Your rating will be displayed only in aggregate (coming soon) -- your identity in rating this
+                comment will not be made public (I have to record it though to show you a red/green indicator that you've rated it).
+            </p>
+            <table class="table table-striped table-bordered" id="commentsTable">
+                <thead>
+                </thead>
+                <tbody>
+                    @*Filled in by JS below*@
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+
+        function rateThanks(jsonData) {
+            console.log("rateThanks");
+            console.log(jsonData.status);
+            $("#" + window.questionIDLastClicked).click();
+        }
+
+        function rateError(jsonData) {
+            console.log("rateError");
+            console.log(jsonData.status);
+        }
+
+        function populateComments(jsonData) {
+            console.log(jsonData);
+            $("#commentsTable tbody").empty();
+            if (jsonData.length == 0) {
+                //jsonData.push({ "ID": -1, "Comment": "There are no comments yet for this question" });
+                $("<tr>").append(
+                    $("<td>").text("There are no comments yet for this question"),
+                    $("<td>").text("")
+                ).appendTo("#commentsTable");
+            }
+            else {
+                for (var i = 0; i < jsonData.length; i++) {
+                    var cmt = jsonData[i];
+                    var userRating = cmt.userRating;
+                    var downRating = userRating < 0 ? "btn-danger" : "btn-default";
+                    var upRating = userRating > 0 ? "btn-success" : "btn-default";
+                    var rateDownHtml = "<button id='" + "d" + cmt.id + "' type='button' class='rateButton btn " + downRating + " btn-sm'><span class='glyphicon glyphicon-thumbs-down'></span></button>";
+                    var rateUpHtml = "<button id='" + "u" + cmt.id + "' type='button' class='rateButton btn " + upRating + " btn-sm'><span class='glyphicon glyphicon-thumbs-up'></span></button>";
+
+                    var rateBarHtml = "<div class='btn-group' role='group'>" + rateUpHtml + rateDownHtml + "</div>";
+                    $("<tr>").append(
+                        $("<td>").html("<p>" + cmt.comment + "</p>" + "<div class='pull-left'>" + rateBarHtml + "</div>")
+                    ).appendTo("#commentsTable");
+                }
+            }
+
+            // Add click handlers to rate buttons in the comments
+            $(".rateButton").on("click", function (e) {
+                var id = $(this).attr("id");
+                var action = id.charAt(0) == "d" ? "DOWN" : "UP";
+                var commentID = id.substring(1);
+                console.log("button clicked" + action + " " + commentID);
+                var formData = { CommentID: commentID, Action: action };
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data: formData,
+                    url: "/api/Ratings",
+                    success: rateThanks,
+                    error: rateError
+                });
+                e.preventDefault();
+            });
+        }
+
+        $(document).ready(function () {
+
+            // Add click handler to each button.  Makes an ajax call to get comments
+            $("#questions").on("click", "button", null, function () {
+                var qid = $(this).attr("id");
+                window.questionIDLastClicked = qid;
+                $("#questions button").removeClass("active");
+                $(this).addClass("active");
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: "/api/Ratings/" + qid,
+                    success: populateComments
+                });
+            });
+
+
+
+        });
+    </script>
+}
+

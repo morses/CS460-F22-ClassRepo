@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Standups.Models.Supquestion>
+
+<h2>Open Questions</h2>
+<p>
+    Please provide some feedback on the course.  Responses are <strong>anonymous and public</strong>.
+    Click a question to provide your response and then rate other responses.
+</p>
+<ul class="list-group">
+    @if (Model.Count() == 0)
+    {
+        <li class="list-group-item disabled">There are no questions at the moment.</li>
+    }
+    @foreach (var q in Model)
+    {
+        <li class="list-group-item">
+            <strong>Q:</strong>
+            <a asp-controller="UserComments" asp-action="Create" asp-route-id="@q.Id">
+                @q.Question <span class="badge">@q.CountOfCommentsWithAdvisorApproval()</span>
+            </a>
+        </li>
+    }
+</ul>
+<p class="mt-3">
+    <a asp-controller="UserComments" asp-action="Rate" class="btn btn-success">Review and Rate Comments</a>
+</p>

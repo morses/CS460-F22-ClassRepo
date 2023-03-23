@@ -1,0 +1,47 @@
+﻿@model Standups.Models.Supcomment
+
+@{
+    ViewBag.Title = "Comments";
+    var questionText = Model.Supquestion.Question;
+}
+
+<div class="row justify-content-center">
+    <div class="col text-center">
+        <h1>Feedback <span class="fs-4">Comments</span></h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SupquestionId" />
+            <div class="form-group">
+                <label for="Comment" class="control-label">@questionText</label>
+                <textarea asp-for="Comment" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.SupquestionId)
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group mb-3">
+                @Html.LabelFor(model => model.Comment, questionText, htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Comment, 5, 20, htmlAttributes: new { @class = "form-control", style = "min-width: 80%" })
+                @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+}*@

@@ -1,0 +1,21 @@
+﻿@model Standups.Models.Supquestion
+
+@{
+    ViewBag.Title = "Thanks";
+}
+
+<div class="row justify-content-center">
+    <div class="col text-center">
+        <h1>Feedback <span class="fs-4">Comments</span></h1>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Thank you!</h3>
+        <p>Your comment has been saved and should appear in the list of all comments soon.  While you're here, take a moment to read and rate other comments:</p>
+        <p><a asp-controller="UserComments" asp-action="Rate" class="btn btn-success">Review and Rate Comments</a></p>
+        <p><a asp-controller="Home" asp-action="Index">Return to the Home page</a></p>
+    </div>
+</div>
