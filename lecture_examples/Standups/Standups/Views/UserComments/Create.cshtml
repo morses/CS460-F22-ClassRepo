@@ -19,7 +19,7 @@
             <input type="hidden" asp-for="SupquestionId" />
             <div class="form-group">
                 <label for="Comment" class="control-label">@questionText</label>
-                <textarea asp-for="Comment" class="form-control"></textarea>
+                <textarea asp-for="Comment" class="form-control mt-2" rows="5" style="min-width: 80%"></textarea>
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">

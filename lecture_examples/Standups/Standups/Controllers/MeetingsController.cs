@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Standups.Controllers.ActionFilters;
 using Standups.DAL.Abstract;
 using Standups.Data;
 using Standups.Models;
@@ -16,17 +17,17 @@ namespace Standups.Controllers
 {
     public class MeetingsController : Controller
     {
-        public readonly IUserService _userService;
-        public readonly IRepository<Supmeeting> _meetingRepository;
-        public readonly IRepository<Supuser> _userRepository;
+        private IUserService _userService;
+        private readonly IRepository<Supmeeting> _meetingRepository;
+        private readonly IRepository<Supuser> _userRepository;
 
-        public MeetingsController(IUserService userService, IRepository<Supmeeting> meetingRepository, IRepository<Supuser> userRepository)
+        public MeetingsController(IRepository<Supmeeting> meetingRepository, IRepository<Supuser> userRepository)
         {
-            _userService = userService;
             _meetingRepository = meetingRepository;
             _userRepository = userRepository;
         }
 
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult Index()
         {
             _userService.User = User;
@@ -44,6 +45,7 @@ namespace Standups.Controllers
             return View(vm);
         }
 
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult Details(int? id)
         {
             _userService.User = User;
@@ -63,6 +65,7 @@ namespace Standups.Controllers
             return View(meeting);
         }
 
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult Create()
         {
             _userService.User = User;
@@ -74,6 +77,7 @@ namespace Standups.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult Create([Bind("Completed,Planning,Obstacles")] Supmeeting supmeeting)
         {
             _userService.User = User;

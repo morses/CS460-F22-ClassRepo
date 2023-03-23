@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Standups.Controllers.ActionFilters;
 using Standups.DAL.Abstract;
 using Standups.Models;
 using Standups.Models.DTO;
@@ -15,9 +16,8 @@ namespace Standups.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IQuestionRepository _questionRepository;
         private readonly IRepository<SupcommentRating> _commentRatingRepository;
-        public RatingsController(IUserService userService, ICommentRepository commentRepository, IQuestionRepository questionRepository, IRepository<SupcommentRating> commentRatingRepository)
+        public RatingsController(ICommentRepository commentRepository, IQuestionRepository questionRepository, IRepository<SupcommentRating> commentRatingRepository)
         {
-            _userService = userService;
             _commentRepository = commentRepository;
             _questionRepository = questionRepository;
             _commentRatingRepository = commentRatingRepository;   
@@ -27,6 +27,7 @@ namespace Standups.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ServiceFilter(typeof(UserServiceFilter))]
         public ActionResult<List<CommentData>> Comments(int id)
         {
             Supquestion q = _questionRepository.GetById(id);
@@ -48,7 +49,8 @@ namespace Standups.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult MakeRating(Rating rating)
+        [ServiceFilter(typeof(UserServiceFilter))]
+        public ActionResult MakeRating([FromForm]Rating rating)
         {
             string statusValue = "NOT OK";
             int ratingValue = 0;
@@ -67,7 +69,9 @@ namespace Standups.Controllers
             {
                 try
                 {
-                    //_commentRepository.MakeCommentRating(user.Id, rating.CommentId, ratingValue)
+                    // Not a great design to save a new one each time.  Someone who clicks the buttons incessantly would
+                    // fill up rows in our table.  Better to update the existing one with a new rating and date, unless
+                    // we really wanted to track when someone made ratings over time.  Not hard to change over.
                     SupcommentRating newRating = new SupcommentRating
                     {
                         SupraterUserId = user.Id,

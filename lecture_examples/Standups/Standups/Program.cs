@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Standups.Controllers.ActionFilters;
 using Standups.DAL.Abstract;
 using Standups.DAL.Concrete;
 using Standups.Data;
@@ -64,7 +65,10 @@ namespace Standups
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
+
             builder.Services.AddScoped<IUserService, UserService>();
+            // Add our custom Action Filter to set up the user service
+            builder.Services.AddScoped<UserServiceFilter>();
 
             // enable Swagger features (needs package Swashbuckle.AspNetCore)
             builder.Services.AddSwaggerGen();

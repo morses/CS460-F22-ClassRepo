@@ -2,7 +2,7 @@
 
 <h2>Open Questions</h2>
 <p>
-    Please provide some feedback on the course.  Responses are <strong>anonymous and public</strong>.
+    Please provide some feedback on the course.  Responses are <strong>anonymous and public</strong>, but are moderated.
     Click a question to provide your response and then rate other responses.
 </p>
 <ul class="list-group">
@@ -13,10 +13,11 @@
     @foreach (var q in Model)
     {
         <li class="list-group-item">
-            <strong>Q:</strong>
+            <span class="align-middle"><strong><i class="bi bi-patch-question fs-3"></i></strong></span>
             <a asp-controller="UserComments" asp-action="Create" asp-route-id="@q.Id">
-                @q.Question <span class="badge">@q.CountOfCommentsWithAdvisorApproval()</span>
+                @q.Question <span class="badge bg-secondary rounded-pill ms-3" title="Number of comments to review">@q.CountOfCommentsWithAdvisorApproval()</span>
             </a>
+            
         </li>
     }
 </ul>

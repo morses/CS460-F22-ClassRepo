@@ -40,7 +40,9 @@ namespace Standups.DAL.Concrete
                     {
                         Id = c.Id,
                         TimeStamp = c.SubmissionDate,
-                        UserRating = c.SupcommentRatings.FirstOrDefault(cr => cr.SupraterUserId == (user?.Id ?? -1))?.RatingValue ?? 0,
+                        UserRating = c.SupcommentRatings.OrderByDescending(cr => cr.RatingDate)
+                                                        .FirstOrDefault(cr => cr.SupraterUserId == (user?.Id ?? -1))
+                                                        ?.RatingValue ?? 0,
                         Likes = c.SupcommentRatings.Where(cr => cr.RatingValue > 0).Count(),
                         Dislikes = c.SupcommentRatings.Where(cr => cr.RatingValue < 0).Count(),
                         Comment = c.Comment

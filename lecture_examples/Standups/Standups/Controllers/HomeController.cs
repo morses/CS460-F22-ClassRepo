@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Standups.Controllers.ActionFilters;
 using Standups.DAL.Abstract;
 using Standups.Models;
 using Standups.Services;
@@ -13,20 +14,19 @@ namespace Standups.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IUserService _userService;         // use this for all user related functionality
+        private IUserService _userService;         // use this for all user related functionality, it is set via DI and the UserServiceFilter attribute (see Index() below)
         private readonly IQuestionRepository _questionRepository;
 
-        public HomeController(ILogger<HomeController> logger, IUserService userService, IQuestionRepository questionRepository)
+        public HomeController(ILogger<HomeController> logger, IQuestionRepository questionRepository)
         {
             _logger = logger;
-            _userService = userService;
             _questionRepository = questionRepository;
         }
 
+        // If you need the userService, add this filter (and the field above)
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult Index()
         {
-            // And it isn't set by the time the Controller is instantiated, only when this method is called
-            _userService.User = User;
             HomeVM vm = new HomeVM();
 
             // Registered users (that aren't admin) must select which group they are in before they can

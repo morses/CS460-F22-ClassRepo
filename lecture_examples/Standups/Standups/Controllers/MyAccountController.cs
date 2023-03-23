@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Standups.Controllers.ActionFilters;
 using Standups.DAL.Abstract;
 using Standups.Models;
 using Standups.Services;
@@ -12,15 +13,16 @@ namespace Standups.Controllers
 {
     public class MyAccountController : Controller
     {
-        public readonly IUserService _userService;
-        public readonly IRepository<Supgroup> _groupRepository;
-        public readonly IRepository<Supuser> _userRepository;
-        public MyAccountController(IUserService userService, IRepository<Supgroup> groupRepository, IRepository<Supuser> userRepository) 
+        private readonly IUserService _userService;
+        private readonly IRepository<Supgroup> _groupRepository;
+        private readonly IRepository<Supuser> _userRepository;
+        public MyAccountController(IRepository<Supgroup> groupRepository, IRepository<Supuser> userRepository) 
         {
-            _userService = userService;
             _groupRepository = groupRepository;
             _userRepository = userRepository;
         }
+
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult Index()
         {
             _userService.User = User;
@@ -44,6 +46,7 @@ namespace Standups.Controllers
             return groups.Select(g => new SelectListItem { Value = $"{g.Id}", Text = $"{g.Name} -- \"{g.Motto}\"" }).ToList();
         }
 
+        [ServiceFilter(typeof(UserServiceFilter))]
         // Allow the current user to select which group they are in
         public IActionResult SelectGroup()
         {
@@ -70,6 +73,7 @@ namespace Standups.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ServiceFilter(typeof(UserServiceFilter))]
         public IActionResult SelectGroup(int? id)
         {
             _userService.User = User;
