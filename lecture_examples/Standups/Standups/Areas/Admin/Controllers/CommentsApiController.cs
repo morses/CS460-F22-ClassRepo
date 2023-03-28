@@ -7,6 +7,7 @@ using Standups.DAL.Abstract;
 using Standups.DAL.Concrete;
 using Standups.Models;
 using Standups.Models.DTO;
+using System.ComponentModel.Design;
 using System.Data;
 
 namespace Standups.Areas.Admin.Controllers
@@ -56,6 +57,7 @@ namespace Standups.Areas.Admin.Controllers
                          .ToList();
         }
 
+
         // PATCH: api/comments/4
         [HttpPatch("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -71,6 +73,7 @@ namespace Standups.Areas.Admin.Controllers
             {
                 return BadRequest();
             }
+
             // Retrieve this comment from the db
             Supcomment actualComment = _supcommentRepository.FindById(id);
             if(actualComment == null)
