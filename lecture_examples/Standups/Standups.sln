@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standups", "Standups\Standups.csproj", "{BFC9F20A-EFE0-40CF-9BD1-860D38BAF25C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Standups", "Standups\Standups.csproj", "{BFC9F20A-EFE0-40CF-9BD1-860D38BAF25C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standups_BDD_Tests", "Standups_BDD_Tests\Standups_BDD_Tests.csproj", "{8D41DB4F-EA59-4041-BD0F-70B879429F38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BFC9F20A-EFE0-40CF-9BD1-860D38BAF25C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFC9F20A-EFE0-40CF-9BD1-860D38BAF25C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFC9F20A-EFE0-40CF-9BD1-860D38BAF25C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D41DB4F-EA59-4041-BD0F-70B879429F38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D41DB4F-EA59-4041-BD0F-70B879429F38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D41DB4F-EA59-4041-BD0F-70B879429F38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D41DB4F-EA59-4041-BD0F-70B879429F38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
