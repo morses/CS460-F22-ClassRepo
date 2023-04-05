@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 namespace Standups_BDD_Tests.Drivers
 {
     /// <summary>
-    /// Manages a browser instance using Selenium
+    /// Manages a browser instance using Selenium.  From: https://docs.specflow.org/projects/specflow/en/latest/ui-automation/Selenium-with-Page-Object-Pattern.html
+    /// An instance of this class is created and provided by the DI container
     /// </summary>
     public class BrowserDriver : IDisposable
     {
         private readonly Lazy<IWebDriver> _currentWebDriverLazy;
-        private bool _isDisposed;
+        private bool _isDisposed = false;
 
         public BrowserDriver()
         {
@@ -23,7 +24,7 @@ namespace Standups_BDD_Tests.Drivers
         }
 
         /// <summary>
-        /// The Selenium IWebDriver instance
+        /// The Selenium IWebDriver instance.  It is loaded when the .Value is invoked (otherwise lazy)
         /// </summary>
         public IWebDriver Current => _currentWebDriverLazy.Value;
 
