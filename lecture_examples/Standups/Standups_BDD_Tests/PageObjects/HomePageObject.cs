@@ -7,14 +7,24 @@ namespace Standups_BDD_Tests.PageObjects
 {
     public class HomePageObject : PageObject
     {
-        private const string Url = "https://localhost:7283/";
-
-        //The default wait time in seconds for wait.Until
-        public const int DefaultWaitInSeconds = 5;
         public HomePageObject(IWebDriver webDriver) : base(webDriver)
         {
-            _webDriver.Navigate().GoToUrl(Url);
+            // using a named page (in Common.cs)
+            _pageName = "Home";
         }
 
+        public IWebElement RegisterButton => _webDriver.FindElement(By.Id("register-link"));
+        public IWebElement NavBarHelloLink => _webDriver.FindElement(By.CssSelector("a[href=\"/Identity/Account/Manage\"]"));
+
+        public string NavbarWelcomeText()
+        {
+            return NavBarHelloLink.Text;
+        }
+
+        public void Logout()
+        {
+            IWebElement navbarLogoutButton = _webDriver.FindElement(By.Id("logout-button"));
+            navbarLogoutButton.Click();
+        }
     }
 }

@@ -17,10 +17,23 @@ namespace Standups_BDD_Tests.PageObjects
     {
         protected readonly IWebDriver _webDriver;
 
+        // set this in derived classes
+        protected string _pageName;
+
+        //The default wait time in seconds for WaitUntil
         public int DefaultWaitInSeconds { get; set; } = 5;
         public PageObject(IWebDriver webDriver)
         {
             _webDriver = webDriver;
+        }
+
+        // Go to the previously set page name (convenience method for using derived classes)
+        public void GoTo()
+        {
+            if(_pageName != null)
+            {
+                GoTo(_pageName);
+            }
         }
 
         /// <summary>
@@ -34,6 +47,7 @@ namespace Standups_BDD_Tests.PageObjects
         }
 
         public string GetTitle() => _webDriver.Title;
+        public string GetURL() => _webDriver.Url;
 
         public bool SaveAllCookies()
         {
