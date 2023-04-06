@@ -18,7 +18,11 @@
 
   <ItemGroup>
     <Folder Include="Drivers\" />
-    <Folder Include="StepDefinitions\" />
+    <Folder Include="Drivers\" />
+    <Folder Include="Hooks\" />
+    <Folder Include="Documentation\" />
+    <Folder Include="Shared\" />
+    <Folder Include="PageObjects\" />
     <Folder Include="Support\" />
   </ItemGroup>
 
