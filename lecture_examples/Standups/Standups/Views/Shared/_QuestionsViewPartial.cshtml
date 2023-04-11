@@ -12,7 +12,7 @@
     }
     @foreach (var q in Model)
     {
-        <li class="list-group-item">
+        <li class="list-group-item question">
             <span class="align-middle"><strong><i class="bi bi-patch-question fs-3"></i></strong></span>
             <a asp-controller="UserComments" asp-action="Create" asp-route-id="@q.Id">
                 @q.Question <span class="badge bg-secondary rounded-pill ms-3" title="Number of comments to review">@q.CountOfCommentsWithAdvisorApproval()</span>

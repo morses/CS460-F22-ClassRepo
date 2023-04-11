@@ -10,9 +10,11 @@ namespace Standups_BDD_Tests.StepDefinitions
     public class HomeStepDefinitions
     {
         private readonly HomePageObject _homePage;
+        private readonly ScenarioContext _scenarioContext;
 
-        public HomeStepDefinitions(BrowserDriver browserDriver) 
+        public HomeStepDefinitions(ScenarioContext context, BrowserDriver browserDriver) 
         {
+            _scenarioContext = context;
             _homePage = new HomePageObject(browserDriver.Current);
         } 
 
@@ -40,6 +42,8 @@ namespace Standups_BDD_Tests.StepDefinitions
             _homePage.RegisterButton.Should().NotBeNull();
             _homePage.RegisterButton.Displayed.Should().BeTrue();
 
+            // And must it be a button?  Makes it more fragile and increases "friction" in developing the UI, but...
+            // Here using normal NUnit constraints
             Assert.That(_homePage.RegisterButton.GetAttribute("class"), Does.Contain("btn"));
         }
 
@@ -53,6 +57,20 @@ namespace Standups_BDD_Tests.StepDefinitions
         public void WhenILoadPreviouslySavedCookies()
         {
             _homePage.LoadAllCookies().Should().BeTrue();
+        }
+
+        [Given(@"I logout"), When(@"I logout")]
+        public void GivenILogout()
+        {
+            _homePage.GoTo();
+            _homePage.Logout();
+        }
+
+        [Then(@"I can see a link for ""([^""]*)"" on the page")]
+        public void ThenICanSeeALinkForOnThePage(string question)       // should have named this one with question in the name
+        {
+            ((string)_scenarioContext["CurrentQuestionId"]).Should().BeEquivalentTo(question);
+            _homePage.HasQuestionText((string)_scenarioContext["CurrentQuestionText"]).Should().BeTrue();
         }
 
     }
