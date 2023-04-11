@@ -20,7 +20,10 @@ namespace Standups_BDD_Tests.Shared
         public static readonly Dictionary<string, string> Paths = new()
         {
             { "Home" , "/" },
-            { "Login", "/Identity/Account/Login" }
+            { "Login", "/Identity/Account/Login" },
+            { "SelectGroup", "/MyAccount/SelectGroup" },
+            { "AdminQuestions", "/Admin/Questions" },
+            { "AdminQuestionsCreate", "/Admin/Questions/Create" }
         };
 
         public static string PathFor(string pathName) => Paths[pathName];

@@ -10,9 +10,11 @@ namespace Standups_BDD_Tests.StepDefinitions
     public class HomeStepDefinitions
     {
         private readonly HomePageObject _homePage;
+        private readonly ScenarioContext _scenarioContext;
 
-        public HomeStepDefinitions( BrowserDriver browserDriver ) 
+        public HomeStepDefinitions( ScenarioContext context, BrowserDriver browserDriver ) 
         {
+            _scenarioContext = context;
             _homePage = new HomePageObject(browserDriver.Current);
         }
 
@@ -26,7 +28,7 @@ namespace Standups_BDD_Tests.StepDefinitions
         [Given(@"I am on the ""([^""]*)"" page"), When(@"I am on the ""([^""]*)"" page")]
         public void WhenIAmOnThePage(string pageName)
         {
-            _homePage.GoTo();
+            _homePage.GoTo(pageName);
         }
 
         [Then(@"The page title contains ""([^""]*)""")]
@@ -60,6 +62,18 @@ namespace Standups_BDD_Tests.StepDefinitions
             _homePage.LoadAllCookies().Should().BeTrue();
         }
 
+        [Given(@"I logout"),When(@"I logout")]
+        public void GivenILogout()
+        {
+            _homePage.GoTo();
+            _homePage.Logout();
+        }
 
+        [Then(@"I can see a link for ""([^""]*)"" on the page")]
+        public void ThenICanSeeALinkForOnThePage(string question)
+        {
+            ((string)_scenarioContext["CurrentQuestionId"]).Should().BeEquivalentTo(question);
+            _homePage.HasQuestionText((string)_scenarioContext["CurrentQuestionText"]).Should().BeTrue();
+        }
     }
 }

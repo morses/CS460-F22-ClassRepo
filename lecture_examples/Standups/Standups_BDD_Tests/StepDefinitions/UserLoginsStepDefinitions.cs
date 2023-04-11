@@ -1,7 +1,10 @@
+using Castle.Core.Configuration;
+using Microsoft.Extensions.Configuration;
 using Standups_BDD_Tests.Drivers;
 using Standups_BDD_Tests.PageObjects;
 using Standups_BDD_Tests.Shared;
 using System;
+using System.Diagnostics;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -26,11 +29,17 @@ namespace Standups_BDD_Tests.StepDefinitions
         private readonly LoginPageObject _loginPage;
         private readonly HomePageObject _homePage;
 
+        private IConfigurationRoot Configuration { get; }
+
         public UserLoginsStepDefinitions(ScenarioContext context, BrowserDriver browserDriver)
         {
             _loginPage = new LoginPageObject(browserDriver.Current);
             _homePage = new HomePageObject(browserDriver.Current);
             _scenarioContext = context;
+
+            // we need to keep the admin password secret
+            IConfigurationBuilder builder = new ConfigurationBuilder().AddUserSecrets<UserLoginsStepDefinitions>();
+            Configuration = builder.Build();
         }
 
         [Given(@"the following users exist")]
@@ -50,7 +59,19 @@ namespace Standups_BDD_Tests.StepDefinitions
             _scenarioContext["NonUsers"] = nonUsers;
         }
 
-        [Given(@"I am a user with first name '([^']*)'")]
+        [Given(@"the users have a group set")]
+        public void GivenTheUsersHaveAGroupSet()
+        {
+            // Go through each user and set a group for them
+            IEnumerable<TestUser> users = (IEnumerable<TestUser>)_scenarioContext["Users"];
+            foreach(TestUser user in users)
+            {
+                GivenIAmAUserWithFirstName(user.FirstName);
+            }
+        }
+
+
+        [Given(@"I am a user with first name '([^']*)'"), When(@"I am a user with first name '([^']*)'")]
         public void GivenIAmAUserWithFirstName(string firstName)
         {
             // Find this user, first look in users, then in non-users
@@ -65,7 +86,27 @@ namespace Standups_BDD_Tests.StepDefinitions
             _scenarioContext["CurrentUser"] = u;
         }
 
-        [When(@"I login")]
+        [Given(@"I am the admin")]
+        public void GivenIAmTheAdmin()
+        {
+            TestUser admin = new TestUser
+            {
+                UserName = "admin",
+                FirstName = "The",
+                LastName = "Admin",
+                Email = "admin@example.com",
+                Password = Configuration["SeedAdminPW"]
+            };
+            if(admin.Password == null)
+            {
+                throw new Exception("Did you forget to set the admin password in user-secrets?");
+            }
+            Debug.WriteLine("Password = " + admin.Password);
+            _scenarioContext["CurrentUser"] = admin;
+        }
+
+
+        [When(@"I login"), Given(@"I login")]
         public void WhenILogin()
         {
             // Go to the login page
