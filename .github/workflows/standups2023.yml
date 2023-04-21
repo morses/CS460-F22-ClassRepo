@@ -51,25 +51,13 @@ jobs:
     - name: Publish
       run: dotnet publish "${{ env.MAIN_PROJECT }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: standups_webapp
-        path: ${{env.PATH_TO_SOLUTION}}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}  # actions don't use the working-directory we set above
-        if-no-files-found: error
+    - name: Deploy to Azure WebApp using previously stored publish profile
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.standups2023_C80C }}
+        package: ${{ env.PATH_TO_SOLUTION }}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-  #deploy:
-  #  runs-on: ubuntu-latest
-  #  needs: build
-  #  steps:
-  #  - name: Download artifact from build job
-  #    uses: actions/download-artifact@v3
-  #    with:
-  #      name: standups_webapp
-  #      path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-  #  - name: Deploy to Azure WebApp
-  #    uses: azure/webapps-deploy@v2
-  #    with:
-  #      app-name: ${{ env.AZURE_WEBAPP_NAME }}
-  #      publish-profile: ${{ secrets.standups2023_C80C }}
-  #      package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+# Lots of examples have the deploy step in a separate job, but publishing artifacts for the publish
+# folder took 2m 44s and 95MB, which is unnecessary when we don't need to keep it, so put deploy
+# in the same job as build/test/publish
