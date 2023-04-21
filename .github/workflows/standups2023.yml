@@ -20,11 +20,11 @@ env:
 
 defaults:
   run:
-    working-directory: ${{ env.PATH_TO_SOLUTION }}
+    working-directory: './lecture_examples/Standups'
 
 jobs:
   build_and_test:
-    name: Build and run tests on ${{ env.MAIN_PROJECT }}
+    name: Build and run tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
