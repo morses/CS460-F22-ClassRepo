@@ -61,3 +61,5 @@ jobs:
 # Lots of examples have the deploy step in a separate job, but publishing artifacts for the publish
 # folder took 2m 44s and 95MB, which is unnecessary when we don't need to keep it, so put deploy
 # in the same job as build/test/publish
+
+# https://github.com/microsoft/Oryx/issues/1242#issuecomment-1050729304
