@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Standups", "Standups\Standups.csproj", "{BFC9F20A-EFE0-40CF-9BD1-860D38BAF25C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standups_BDD_Tests", "Standups_BDD_Tests\Standups_BDD_Tests.csproj", "{582470BA-D988-46CD-87A4-FC4284F9D7B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Standups_BDD_Tests", "Standups_BDD_Tests\Standups_BDD_Tests.csproj", "{582470BA-D988-46CD-87A4-FC4284F9D7B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standups_Tests", "Standups_Tests\Standups_Tests.csproj", "{3AED7555-3646-4130-99A9-60C94646B4FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{582470BA-D988-46CD-87A4-FC4284F9D7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{582470BA-D988-46CD-87A4-FC4284F9D7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{582470BA-D988-46CD-87A4-FC4284F9D7B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AED7555-3646-4130-99A9-60C94646B4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AED7555-3646-4130-99A9-60C94646B4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AED7555-3646-4130-99A9-60C94646B4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AED7555-3646-4130-99A9-60C94646B4FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
