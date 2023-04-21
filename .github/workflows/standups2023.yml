@@ -9,7 +9,7 @@ on:
 
 env:
 # path from root of repo to dir containing project folders (usually where the .sln file is)
-  PATH_TO_SOLUTION: ./lecture_examples/Standups
+  PATH_TO_SOLUTION: './lecture_examples/Standups'
   MAIN_PROJECT: Standups
   UNIT_TEST_PROJECT: Standups_Tests
 # JS_UNIT_TEST_PROJECT: Standups_JS_Tests
@@ -20,7 +20,7 @@ env:
 
 defaults:
   run:
-    working-directory: ${{ PATH_TO_SOLUTION }}
+    working-directory: ${{ env.PATH_TO_SOLUTION }}
 
 jobs:
   build_and_test:
