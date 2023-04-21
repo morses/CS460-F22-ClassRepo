@@ -14,7 +14,7 @@ env:
   UNIT_TEST_PROJECT: Standups_Tests
 # JS_UNIT_TEST_PROJECT: Standups_JS_Tests
   AZURE_WEBAPP_NAME: standups2023
-  AZURE_WEBAPP_PACKAGE_PATH: './Standups/publish'
+  AZURE_WEBAPP_PACKAGE_PATH: publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
 
@@ -54,8 +54,9 @@ jobs:
     - name: Publish Artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        name: standups_webapp
+        path: ${{env.PATH_TO_SOLUTION}}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}  # actions don't use the working-directory we set above
+        if-no-files-found: error
 
   #deploy:
   #  runs-on: ubuntu-latest
@@ -64,7 +65,7 @@ jobs:
   #  - name: Download artifact from build job
   #    uses: actions/download-artifact@v3
   #    with:
-  #      name: webapp
+  #      name: standups_webapp
   #      path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
   #  - name: Deploy to Azure WebApp
   #    uses: azure/webapps-deploy@v2
