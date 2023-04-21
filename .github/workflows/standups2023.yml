@@ -1,0 +1,74 @@
+name: Build, test and deploy Standups application to Azure
+
+on:
+  push:
+    branches: [ "integration" ]
+  pull_request:
+    branches: [ "integration" ]
+  workflow_dispatch: 
+
+env:
+# path from root of repo to dir containing project folders (usually where the .sln file is)
+  PATH_TO_SOLUTION: ./lecture_examples/Standups
+  MAIN_PROJECT: Standups
+  UNIT_TEST_PROJECT: Standups_Tests
+# JS_UNIT_TEST_PROJECT: Standups_JS_Tests
+  AZURE_WEBAPP_NAME: standups2023
+  AZURE_WEBAPP_PACKAGE_PATH: ./publish
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 7.0.x
+
+defaults:
+  run:
+    working-directory: ${{ PATH_TO_SOLUTION }}
+
+jobs:
+  build_and_test:
+    name: Build and run tests on ${{ env.MAIN_PROJECT }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+
+    - name: Restore all projects in use
+      run: |
+        dotnet restore "${{ env.MAIN_PROJECT }}"
+        dotnet restore "${{ env.UNIT_TEST_PROJECT }}"
+
+    - name: Build main project
+      run: dotnet build "${{ env.MAIN_PROJECT }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+
+    - name: Build unit test project
+      run: dotnet build "${{ env.UNIT_TEST_PROJECT }}" --configuration "Debug" --no-restore
+
+    - name: Run all unit tests, but exclude BDD tests
+      run: dotnet test --filter FullyQualifiedName\!~Features --no-restore
+
+    - name: Publish
+      run: dotnet publish "${{ env.MAIN_PROJECT }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+  #deploy:
+  #  runs-on: ubuntu-latest
+  #  needs: build
+  #  steps:
+  #  - name: Download artifact from build job
+  #    uses: actions/download-artifact@v3
+  #    with:
+  #      name: webapp
+  #      path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+  #  - name: Deploy to Azure WebApp
+  #    uses: azure/webapps-deploy@v2
+  #    with:
+  #      app-name: ${{ env.AZURE_WEBAPP_NAME }}
+  #      publish-profile: ${{ secrets.standups2023_C80C }}
+  #      package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
