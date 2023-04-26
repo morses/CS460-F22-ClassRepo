@@ -22,4 +22,5 @@ INSERT INTO [dbo].[SUPGroups] (Name,Motto,SUPAdvisorID,SUPAcademicYearID) VALUES
 	('Otter Productions','do as you otter',1,7),
 	('1.21GB','Git''r done before running OUTATIME',1,7),
 	('Caiman Lizard','We''re not dangerous',1,7),
-	('Team++','We''re bringing the tea',1,7);
+	('Team++','We''re bringing the tea',1,7),
+	('Default','The most boring team',1,7);

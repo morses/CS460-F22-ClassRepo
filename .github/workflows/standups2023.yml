@@ -62,4 +62,5 @@ jobs:
 # folder took 2m 44s and 95MB, which is unnecessary when we don't need to keep it, so put deploy
 # in the same job as build/test/publish
 
+# IMPORTANT: I needed to add configuration variables on Azure for the deploy to succeed, see this issue for more
 # https://github.com/microsoft/Oryx/issues/1242#issuecomment-1050729304
