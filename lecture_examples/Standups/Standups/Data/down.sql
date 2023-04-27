@@ -8,7 +8,7 @@ ALTER TABLE [dbo].[SUPGroups] DROP CONSTRAINT [FK_dbo.SUPGroups_dbo.SUPAcademicY
 
 ALTER TABLE [dbo].[SUPCommentRatings] DROP CONSTRAINT [FK_dbo.SUPCommentRatings_dbo.SUPComments_ID];
 ALTER TABLE [dbo].[SUPCommentRatings] DROP CONSTRAINT [FK_dbo.SUPCommentRatings_dbo.SUPUsers_ID];
-ALTER TABLE [dbo].[SUPComments] DROP CONSTRAINT [FK_dbo.SUPComments_dbo.SUPUsers_ID];
+--ALTER TABLE [dbo].[SUPComments] DROP CONSTRAINT [FK_dbo.SUPComments_dbo.SUPUsers_ID];
 ALTER TABLE [dbo].[SUPComments] DROP CONSTRAINT [FK_dbo.SUPComments_dbo.SUPQuestions_ID];
 
 DROP TABLE [dbo].[SUPGroups];
