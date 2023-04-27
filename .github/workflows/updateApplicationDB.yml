@@ -11,18 +11,18 @@ env:
     RESOURCE_GROUP: Standups
     # Need to manually set DB_USERNAME and DB_PASSWORD in the repo secrets settings
     # also need to generate AZURE_CREDENTIALS and set it in the repo secrets settings, follow https://github.com/azure/login/tree/v1/#configure-a-service-principal-with-a-secret
+    PATH_TO_SCRIPTS: './lecture_examples/Standups/Data'
     DOWN_SCRIPT: ./down.sql
     UP_SCRIPT: ./up.sql
     SEED_SCRIPT: ./seed.sql
-
-defaults:
-  run:
-    working-directory: './lecture_examples/Standups/Data'
 
 jobs:
   update-database:
     name: Drop all tables, then run up and seed scripts
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.PATH_TO_SCRIPTS }}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
