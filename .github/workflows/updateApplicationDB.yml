@@ -45,7 +45,7 @@ jobs:
           agentIP=$(curl -s https://api.ipify.org)
           az sql server firewall-rule create \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --server ${{ env.DB_SERVER }} \
+            --server ${{ env.DB_SERVER_NAME }} \
             --name AllowGitHubActions \
             --start-ip-address $agentIP \
             --end-ip-address $agentIP
@@ -64,6 +64,6 @@ jobs:
           set -eu
           az sql server firewall-rule delete \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --server ${{ env.DB_SERVER }} \
+            --server ${{ env.DB_SERVER_NAME }} \
             --name AllowGitHubActions
             
