@@ -63,7 +63,69 @@ else
     }
 }
 
+<div class="row">
+    <div class="col">
+        <h2>Want to receive our newsletter?</h2>
+        <form id="newsletter">
+            <div class="form-group">
+                <label for="email">Enter your email address:</label>
+                <input type="text" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+        <div class="alert alert-primary" id="already-a-subscriber-alert" style="display: none">
+            <button type="button" class="close" data-hide="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-success" id="subscribe-alert" style="display: none">
+            Thank you!  You'll begin receiving our newsletter soon.
+            <button type="button" class="close" data-hide="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
+    <script>
+        @*Just putting this here for convenience in the demo*@
+        function showNewsletterMessage(data) {
+            console.log(data);
+            // If their email is already in the database then we can tell them they're already subscribed
+            if (Array.isArray(data) && data.length) {
+                
+                // finish code here to tell them they're already subscribed
+                $('#already-a-subscriber-alert').prepend(`<p>Hey ${data[0][0].UserName} you're already subscribed.  Thanks for checking!</p>`).show();
+                //$('#already-a-subscriber-alert').show();
+            }
+            else {
+                // Thank them
+                $('#subscribe-alert').show();
+            }
+        }
 
+        // AJAX call to send email in to subscribe to newletter
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            $.ajax({
+                url: `/API/EmailList/${email}`,
+                method: 'GET',
+                success: showNewsletterMessage
+            });
+        }
+
+        // helper to dismiss the bootstrap alert http://jsfiddle.net/cQNFL/21/
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+            });
+        });
+
+        document.getElementById('newsletter')
+                .addEventListener('submit', subscribeNewsletter);
+    </script>
 }
